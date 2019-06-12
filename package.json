@@ -1,0 +1,37 @@
+{
+  "name": "scrollobserver.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/ScrollObserver.min.js",
+  "module": "dist/ScrollObserver.esm.js",
+  "browser": "dist/ScrollObserver.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "live-server",
+    "test": "jest",
+    "build": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyczynski/ScrollObserver.js.git"
+  },
+  "author": {
+    "name": "Przemysław Tyczyński",
+    "url": "https://tyczynski.dev"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tyczynski/ScrollObserver.js/issues"
+  },
+  "homepage": "https://github.com/tyczynski/ScrollObserver.js#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-header-comment": "^0.6.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-rollup": "^2.16.2",
+    "gulp-uglify-es": "^1.0.4",
+    "jest": "^24.8.0"
+  }
+}
