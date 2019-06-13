@@ -3,6 +3,7 @@ const rollup = require('gulp-rollup');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify-es').default;
 const headerComment = require('gulp-header-comment');
+const del = require('del');
 
 const distFolder = './dist';
 const libName = 'ScrollReveal';
@@ -78,4 +79,8 @@ function esm() {
 		.pipe(gulp.dest(distFolder));
 }
 
-exports.build = gulp.series(gulp.parallel(umd, esm, amd));
+function clean() {
+	return del([distFolder]);
+}
+
+exports.build = gulp.series(clean, gulp.parallel(umd, esm, amd));
