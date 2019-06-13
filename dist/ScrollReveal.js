@@ -1,91 +1,140 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.ScrollReveal = {})));
-}(this, (function (exports) { 'use strict';
+(function(global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined'
+		? (module.exports = factory())
+		: typeof define === 'function' && define.amd
+		? define(factory)
+		: (global.ScrollReveal = factory());
+})(this, function() {
+	'use strict';
 
-/**  @const {Object} defaultConfig default class configuration */
-const defaultConfig = {
-  root: null,
-  rootMargin: '0px',
-  threshold: 1,
-  visibleClass: 'in-visible',
-};
+	/**
+	 * Function that returns information about the position of an element
+	 *
+	 * @param {Element} element
+	 * @returns {Array}
+	 */
+	function elementPositionInfo(element) {
+		const { top, height } = element.getBoundingClientRect();
 
-/**
- * ScrollReveal class
- *
- * @class
- */
-class ScrollReveal {
-  /**
-   * Constructor of the class
-   *
-   * @param {String} elements
-   * @param {Object} config
-   */
-  constructor(elements, config) {
-    this.elements = document.querySelectorAll(elements);
-    this.config = Object.assign({}, defaultConfig, config);
+		return [
+			top <= window.innerHeight && top + height >= 0, // is in viewport
+			height + top <= 0 ? 'up' : 'down', // position above or below viewport
+		];
+	}
 
-    this.observer = new IntersectionObserver(this.callback.bind(this), {
-      root: this.config.root,
-      rootMargin: this.config.rootMargin,
-      threshold: this.config.threshold,
-    });
+	/**  @const {Object} defaultConfig default class configuration */
+	const defaultConfig = {
+		root: null,
+		rootMargin: '0px',
+		threshold: 1,
+		visibleClass: 'in-visible',
+	};
 
-    for (let i = 0; i < this.elements.length; i++) {
-      this.observer.observe(this.elements[i]);
-    }
-  }
+	/**
+	 * ScrollReveal class
+	 *
+	 * @class
+	 */
+	class ScrollReveal {
+		/**
+		 * Constructor of the class
+		 *
+		 * @param {(String|NodeList|Element[]|Element)} elements
+		 * @param {Object} config
+		 */
+		constructor(elements = '.js-scroll-observer', config = {}) {
+			if (elements instanceof Element) {
+				this.elements = [elements];
+			} else if (elements instanceof NodeList) {
+				this.elements = Array.from(elements);
+			} else if (elements instanceof String) {
+				this.elements = Array.from(document.querySelectorAll(elements));
+			} else if (elements instanceof Array) {
+				this.elements = elements;
+			} else {
+				throw new Error(
+					"The argument 'elements' passed is not an instance of Element, NodeList, String or Array",
+				);
+			}
 
-  /**
-   * Callback for the IntersectionObserver instance
-   *
-   * @param {Array} entries
-   * @returns {Void}
-   */
-  callback(entries) {
-    entries.forEach(entry => {
-      const target = entry.target;
+			this.config = Object.assign({}, defaultConfig, config);
 
-      if (entry.isIntersecting) {
-        target.classList.add(this.config.visibleClass);
+			window.addEventListener('scroll', this.prepareElements.bind(this));
+		}
 
-        this.observer.unobserve(target);
-      }
-    });
-  }
+		/**
+		 * Function that prepare elements to reveal animation.
+		 * It fired only once after the first page rewind.
+		 *
+		 *
+		 * @returns {Void}
+		 */
+		prepareElements() {
+			this.elements = this.elements.filter(element => {
+				const [isInViewport, viewportPosition] = elementPositionInfo(element);
 
-  /**
-   * Public method that adds another element to the IntersectionObserver instance
-   *
-   * @param {Element} element
-   * @returns {Void}
-   */
-  observe(element) {
-    this.observer.observe(element);
-  }
+				/**
+				 * Adds a "prepared class" only to elements outside of the viewport.
+				 * An additional class adds a class with information about whether the item is above or below the viewport.
+				 */
+				if (!isInViewport) {
+					element.classList.add(viewportPosition);
+					element.classList.add(this.config.preparedClass);
+				}
 
-  /**
-   * The static method that checks the passed argument and returns a list with elements
-   *
-   * @param {(Element|NodeList|string)} elements
-   * @returns {(Element[]|NodeList)}
-   */
-  static getElements(elements) {
-    if (elements instanceof Element) {
-      return [elements];
-    } else if (elements instanceof NodeList) {
-      return elements;
-    } else if (elements instanceof String) {
-      return document.querySelectorAll(elements);
-    }
-  }
-}
+				return !isInViewport;
+			});
 
-exports.ScrollReveal = ScrollReveal;
+			window.removeEventListener('scroll', this.prepareElements.bind(this));
 
-Object.defineProperty(exports, '__esModule', { value: true });
+			this.initObserver();
+		}
 
-})));
+		/**
+		 * Function that initializes the IntersectionObserver instance
+		 *
+		 * @returns {Void}
+		 */
+		initObserver() {
+			this.observer = new IntersectionObserver(this.callback.bind(this), {
+				root: this.config.root,
+				rootMargin: this.config.rootMargin,
+				threshold: this.config.threshold,
+			});
+
+			for (let i = 0; i < this.elements.length; i += 1) {
+				this.observer.observe(this.elements[i]);
+			}
+		}
+
+		/**
+		 * Callback for the IntersectionObserver instance
+		 *
+		 * @param {Array} entries
+		 * @returns {Void}
+		 */
+		callback(entries) {
+			entries.forEach(entry => {
+				const { target } = entry;
+
+				if (entry.isIntersecting) {
+					target.classList.add(this.config.visibleClass);
+
+					this.observer.unobserve(target);
+				}
+			});
+		}
+
+		/**
+		 * Public method that adds another element to the IntersectionObserver instance
+		 *
+		 * @param {Element} element
+		 * @returns {Void}
+		 */
+		observe(element) {
+			this.observer.observe(element);
+		}
+	}
+
+	return ScrollReveal;
+});

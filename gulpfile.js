@@ -17,65 +17,65 @@ const header = `
 `;
 
 function amd() {
-  process.env.NODE_ENV = 'release';
+	process.env.NODE_ENV = 'release';
 
-  return gulp
-    .src(srcPath)
-    .pipe(
-      rollup({
-        output: { name: libName, format: 'amd' },
-        input: inputPath,
-      }),
-    )
+	return gulp
+		.src(srcPath)
+		.pipe(
+			rollup({
+				output: { name: libName, format: 'amd' },
+				input: inputPath,
+			}),
+		)
 
-    .pipe(rename(`${libName}.amd.js`))
-    .pipe(gulp.dest(distFolder))
+		.pipe(rename(`${libName}.amd.js`))
+		.pipe(gulp.dest(distFolder))
 
-    .pipe(uglify())
-    .pipe(rename(`${libName}.amd.min.js`))
+		.pipe(uglify())
+		.pipe(rename(`${libName}.amd.min.js`))
 
-    .pipe(headerComment(header))
-    .pipe(gulp.dest(distFolder));
+		.pipe(headerComment(header))
+		.pipe(gulp.dest(distFolder));
 }
 
 function umd() {
-  process.env.NODE_ENV = 'release';
+	process.env.NODE_ENV = 'release';
 
-  return gulp
-    .src(srcPath)
-    .pipe(
-      rollup({
-        output: { name: libName, format: 'umd' },
-        input: inputPath,
-      }),
-    )
+	return gulp
+		.src(srcPath)
+		.pipe(
+			rollup({
+				output: { name: libName, format: 'umd' },
+				input: inputPath,
+			}),
+		)
 
-    .pipe(rename(`${libName}.js`))
-    .pipe(gulp.dest(distFolder))
+		.pipe(rename(`${libName}.js`))
+		.pipe(gulp.dest(distFolder))
 
-    .pipe(uglify())
-    .pipe(rename(`${libName}.min.js`))
+		.pipe(uglify())
+		.pipe(rename(`${libName}.min.js`))
 
-    .pipe(headerComment(header))
-    .pipe(gulp.dest(distFolder));
+		.pipe(headerComment(header))
+		.pipe(gulp.dest(distFolder));
 }
 
 function esm() {
-  process.env.NODE_ENV = 'release';
+	process.env.NODE_ENV = 'release';
 
-  return gulp
-    .src(srcPath)
-    .pipe(
-      rollup({
-        output: { name: libName, format: 'es' },
-        input: inputPath,
-      }),
-    )
+	return gulp
+		.src(srcPath)
+		.pipe(
+			rollup({
+				output: { name: libName, format: 'es' },
+				input: inputPath,
+			}),
+		)
 
-    .pipe(rename(`${libName}.esm.js`))
+		.pipe(rename(`${libName}.esm.js`))
 
-    .pipe(headerComment(header))
-    .pipe(gulp.dest(distFolder));
+		.pipe(headerComment(header))
+		.pipe(gulp.dest(distFolder));
 }
 
 exports.build = gulp.series(gulp.parallel(umd, esm, amd));
