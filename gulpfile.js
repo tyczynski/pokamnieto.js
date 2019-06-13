@@ -5,9 +5,9 @@ const uglify = require('gulp-uglify-es').default;
 const headerComment = require('gulp-header-comment');
 
 const distFolder = './dist';
-const libName = 'ScrollObserver';
+const libName = 'ScrollReveal';
 const srcPath = './src/**/*.js';
-const inputPath = './src/ScrollObserver.js';
+const inputPath = './src/ScrollReveal.js';
 
 const header = `
   License: <%= pkg.license %>

@@ -2,9 +2,9 @@
   "name": "scrollobserver.js",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/ScrollObserver.min.js",
-  "module": "dist/ScrollObserver.esm.js",
-  "browser": "dist/ScrollObserver.min.js",
+  "main": "dist/ScrollReveal.min.js",
+  "module": "dist/ScrollReveal.esm.js",
+  "browser": "dist/ScrollReveal.min.js",
   "files": [
     "dist"
   ],
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tyczynski/ScrollObserver.js.git"
+    "url": "git+https://github.com/tyczynski/ScrollReveal.js.git"
   },
   "author": {
     "name": "Przemysław Tyczyński",
@@ -23,9 +23,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tyczynski/ScrollObserver.js/issues"
+    "url": "https://github.com/tyczynski/ScrollReveal.js/issues"
   },
-  "homepage": "https://github.com/tyczynski/ScrollObserver.js#readme",
+  "homepage": "https://github.com/tyczynski/ScrollReveal.js#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-header-comment": "^0.6.1",

@@ -1,9 +1,8 @@
-/**
- * License: MIT
- * Generated on 2019/06/12 20:57
- * Author: Przemysław Tyczyński | https://tyczynski.dev
- * Copyright (c) 2019 Przemysław Tyczyński
- */
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.ScrollReveal = {})));
+}(this, (function (exports) { 'use strict';
 
 /**  @const {Object} defaultConfig default class configuration */
 const defaultConfig = {
@@ -85,4 +84,8 @@ class ScrollReveal {
   }
 }
 
-export { ScrollReveal };
+exports.ScrollReveal = ScrollReveal;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

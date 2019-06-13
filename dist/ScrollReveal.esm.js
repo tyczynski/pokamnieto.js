@@ -1,8 +1,9 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.ScrollObserver = {})));
-}(this, (function (exports) { 'use strict';
+/**
+ * License: MIT
+ * Generated on 2019/06/13 17:15
+ * Author: Przemysław Tyczyński | https://tyczynski.dev
+ * Copyright (c) 2019 Przemysław Tyczyński
+ */
 
 /**  @const {Object} defaultConfig default class configuration */
 const defaultConfig = {
@@ -84,8 +85,4 @@ class ScrollReveal {
   }
 }
 
-exports.ScrollReveal = ScrollReveal;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+export { ScrollReveal };
