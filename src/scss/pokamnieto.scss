@@ -1,0 +1,37 @@
+.reveal-fade {
+	transition: none;
+}
+
+.is-prepared {
+	.reveal-fade {
+		opacity: 0;
+	}
+
+	&.up {
+		.reveal-fade {
+			transform: translateY(-30%);
+		}
+	}
+
+	&.down {
+		.reveal-fade {
+			transform: translateY(30%);
+		}
+	}
+}
+
+.is-visible {
+	&.up,
+	&.down {
+		.reveal-fade {
+			transform: translateY(0);
+		}
+	}
+
+	.reveal-fade {
+		transition: 0.8s ease;
+		transition-property: opacity, transform;
+
+		opacity: 1;
+	}
+}

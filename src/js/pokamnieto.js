@@ -1,53 +1,40 @@
 import elementPositionInfo from './utils/elementPositionInfo';
-
-/**  @const {Object} defaultConfig default class configuration */
-const defaultConfig = {
-	root: null,
-	rootMargin: '0px',
-	threshold: 1,
-	visibleClass: 'in-visible',
-};
+import defaultConfig from './defaultConfig';
 
 /**
- * ScrollReveal class
+ * Pokamnieto class
  *
  * @class
  */
-export default class ScrollReveal {
+export default class Pokamnieto {
 	/**
-	 * Constructor of the class
+	 * Class for revealing elements when they appear in the view while scrolling the page based on the IntersectionObserver API.
 	 *
-	 * @param {(String|NodeList|Element[]|Element)} elements
+	 * @param {String} elements
 	 * @param {Object} config
 	 */
-	constructor(elements = '.js-scroll-observer', config = {}) {
-		if (elements instanceof Element) {
-			this.elements = [elements];
-		} else if (elements instanceof NodeList) {
-			this.elements = Array.from(elements);
-		} else if (elements instanceof String) {
-			this.elements = Array.from(document.querySelectorAll(elements));
-		} else if (elements instanceof Array) {
-			this.elements = elements;
-		} else {
-			throw new Error(
-				"The argument 'elements' passed is not an instance of Element, NodeList, String or Array",
-			);
-		}
+	constructor(elements = '.js-pokamnieto', config = {}) {
+		this.elements = Array.from(document.querySelectorAll(elements));
 
 		this.config = Object.assign({}, defaultConfig, config);
 
-		window.addEventListener('scroll', this.prepareElements.bind(this));
+		if (this.config.initImmediately) {
+			this.initObserver();
+		} else {
+			window.addEventListener('scroll', this.prepareElements.bind(this));
+		}
 	}
 
 	/**
 	 * Function that prepare elements to reveal animation.
 	 * It fired only once after the first page rewind.
-	 *
-	 *
-	 * @returns {Void}
 	 */
 	prepareElements() {
+		const { elementPreparedClassName } = this.config;
+
+		/**
+		 * Filter items in the current viewport
+		 */
 		this.elements = this.elements.filter(element => {
 			const [isInViewport, viewportPosition] = elementPositionInfo(element);
 
@@ -57,7 +44,7 @@ export default class ScrollReveal {
 			 */
 			if (!isInViewport) {
 				element.classList.add(viewportPosition);
-				element.classList.add(this.config.preparedClass);
+				element.classList.add(elementPreparedClassName);
 			}
 
 			return !isInViewport;
@@ -70,8 +57,6 @@ export default class ScrollReveal {
 
 	/**
 	 * Function that initializes the IntersectionObserver instance
-	 *
-	 * @returns {Void}
 	 */
 	initObserver() {
 		this.observer = new IntersectionObserver(this.callback.bind(this), {
@@ -89,14 +74,15 @@ export default class ScrollReveal {
 	 * Callback for the IntersectionObserver instance
 	 *
 	 * @param {Array} entries
-	 * @returns {Void}
 	 */
 	callback(entries) {
+		const { elementVisibleClassName } = this.config;
+
 		entries.forEach(entry => {
 			const { target } = entry;
 
 			if (entry.isIntersecting) {
-				target.classList.add(this.config.visibleClass);
+				target.classList.add(elementVisibleClassName);
 
 				this.observer.unobserve(target);
 			}
@@ -107,7 +93,6 @@ export default class ScrollReveal {
 	 * Public method that adds another element to the IntersectionObserver instance
 	 *
 	 * @param {Element} element
-	 * @returns {Void}
 	 */
 	observe(element) {
 		this.observer.observe(element);
