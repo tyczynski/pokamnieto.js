@@ -1,86 +1,10 @@
-const gulp = require('gulp');
-const rollup = require('gulp-rollup');
-const rename = require('gulp-rename');
-const uglify = require('gulp-uglify-es').default;
-const headerComment = require('gulp-header-comment');
-const del = require('del');
+const { watchDocs, buildDocs } = require('./gulp-tasks/docs');
+const { watchLib, buildLib } = require('./gulp-tasks/lib');
 
-const distFolder = './dist';
-const libName = 'ScrollReveal';
-const srcPath = './src/**/*.js';
-const inputPath = './src/ScrollReveal.js';
+// lib tasks
+exports['build:lib'] = buildLib;
+exports['watch:lib'] = watchLib;
 
-const header = `
-  License: <%= pkg.license %>
-  Generated on <%= moment().format('YYYY/MM/DD HH:mm') %>
-  Author: <%= pkg.author.name %> | <%= pkg.author.url %>
-  Copyright (c) 2019 <%= pkg.author.name %>
-`;
-
-function amd() {
-	process.env.NODE_ENV = 'release';
-
-	return gulp
-		.src(srcPath)
-		.pipe(
-			rollup({
-				output: { name: libName, format: 'amd' },
-				input: inputPath,
-			}),
-		)
-
-		.pipe(rename(`${libName}.amd.js`))
-		.pipe(gulp.dest(distFolder))
-
-		.pipe(uglify())
-		.pipe(rename(`${libName}.amd.min.js`))
-
-		.pipe(headerComment(header))
-		.pipe(gulp.dest(distFolder));
-}
-
-function umd() {
-	process.env.NODE_ENV = 'release';
-
-	return gulp
-		.src(srcPath)
-		.pipe(
-			rollup({
-				output: { name: libName, format: 'umd' },
-				input: inputPath,
-			}),
-		)
-
-		.pipe(rename(`${libName}.js`))
-		.pipe(gulp.dest(distFolder))
-
-		.pipe(uglify())
-		.pipe(rename(`${libName}.min.js`))
-
-		.pipe(headerComment(header))
-		.pipe(gulp.dest(distFolder));
-}
-
-function esm() {
-	process.env.NODE_ENV = 'release';
-
-	return gulp
-		.src(srcPath)
-		.pipe(
-			rollup({
-				output: { name: libName, format: 'es' },
-				input: inputPath,
-			}),
-		)
-
-		.pipe(rename(`${libName}.esm.js`))
-
-		.pipe(headerComment(header))
-		.pipe(gulp.dest(distFolder));
-}
-
-function clean() {
-	return del([distFolder]);
-}
-
-exports.build = gulp.series(clean, gulp.parallel(umd, esm, amd));
+// docs taskcs
+exports['watch:docs'] = watchDocs;
+exports['build:docs'] = buildDocs;
