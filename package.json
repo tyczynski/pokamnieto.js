@@ -1,31 +1,50 @@
 {
-	"name": "scrollobserver.js",
-	"version": "0.2.0",
-	"description": "",
-	"main": "dist/ScrollReveal.min.js",
-	"module": "dist/ScrollReveal.esm.js",
-	"browser": "dist/ScrollReveal.min.js",
+	"name": "pokamnieto",
+	"version": "1.0.0",
+	"description": "A lightweight for revealing elements when they appear in the view while scrolling the page based on the IntersectionObserver API.",
+	"keywords": [
+		"animation",
+		"animation-css",
+		"scroll",
+		"transition",
+		"trigger",
+		"reveal",
+		"vanilla-javascript",
+		"vanilla-js",
+		"vanillajs"
+	],
+	"main": "dist/pokamnieto.js",
+	"browser": "dist/pokamnieto.js",
 	"files": [
 		"dist"
 	],
 	"scripts": {
-		"start": "live-server",
-		"test": "jest",
-		"build": "gulp build"
+		"server": "live-server ./docs",
+		"watch:lib": "gulp watch:lib",
+		"build:lib": "gulp build:lib",
+		"watch:docs": "gulp watch:docs",
+		"build:docs": "gulp build:docs",
+		"test": "jest"
 	},
+	"homepage": "https://github.com/tyczynski/pokamnieto.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/tyczynski/ScrollReveal.js.git"
+		"url": "git+https://github.com/tyczynski/pokamnieto.js.git"
 	},
+	"bugs": {
+		"url": "https://github.com/tyczynski/pokamnieto.js/issues"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/tyczynski/pokamnieto.js/blob/master/LICENSE"
+		}
+	],
 	"author": {
 		"name": "Przemysław Tyczyński",
-		"url": "https://tyczynski.dev"
+		"url": "https://tyczynski.pl"
 	},
 	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/tyczynski/ScrollReveal.js/issues"
-	},
-	"homepage": "https://github.com/tyczynski/ScrollReveal.js#readme",
 	"husky": {
 		"hooks": {
 			"pre-commit": "lint-staged"
@@ -39,19 +58,26 @@
 		]
 	},
 	"devDependencies": {
+		"@babel/core": "^7.5.4",
+		"@babel/plugin-transform-object-assign": "^7.2.0",
+		"@babel/preset-env": "^7.5.4",
 		"del": "^4.1.1",
 		"eslint": "^5.3.0",
 		"eslint-config-airbnb-base": "^13.1.0",
 		"eslint-config-prettier": "^4.3.0",
 		"eslint-plugin-import": "^2.17.3",
 		"gulp": "^4.0.2",
-		"gulp-header-comment": "^0.6.1",
+		"gulp-babel": "^8.0.0",
+		"gulp-header": "^2.0.7",
 		"gulp-rename": "^1.4.0",
 		"gulp-rollup": "^2.16.2",
+		"gulp-sass": "^4.0.2",
 		"gulp-uglify-es": "^1.0.4",
 		"husky": "^2.4.1",
 		"jest": "^24.8.0",
 		"lint-staged": "^8.2.0",
+		"live-server": "^1.2.1",
+		"node-sass": "^4.12.0",
 		"prettier": "^1.18.2"
 	}
 }
