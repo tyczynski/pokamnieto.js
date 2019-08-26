@@ -23,8 +23,6 @@
 		"server": "live-server ./docs",
 		"watch:lib": "gulp watch:lib",
 		"build:lib": "gulp build:lib",
-		"watch:docs": "gulp watch:docs",
-		"build:docs": "gulp build:docs",
 		"test": "jest"
 	},
 	"homepage": "https://github.com/tyczynski/pokamnieto.js",
