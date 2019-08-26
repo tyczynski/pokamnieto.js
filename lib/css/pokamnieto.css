@@ -1,0 +1,42 @@
+/**
+ * @package pokamnieto - A lightweight for revealing elements when they appear in the view while scrolling the page based on the IntersectionObserver API.
+ * @version v0.1.0
+ * @link https://github.com/tyczynski/pokamnieto.js
+ * @author Przemysław Tyczyński | https://tyczynski.pl
+ * @license MIT
+ */
+/* ------------------------------
+    REVEAL FADE IN
+------------------------------ */
+.reveal-fade-in.is-prepared {
+  transition: none;
+  opacity: 0;
+}
+
+.reveal-fade-in.is-visible {
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+/* ------------------------------
+    REVEAL FADE UP / FADE DOWN
+------------------------------ */
+.is-prepared .reveal-fade {
+  transition: none;
+  opacity: 0;
+}
+
+.is-prepared.down .reveal-fade {
+  transform: translateY(15%);
+}
+
+.is-prepared.up .reveal-fade {
+  transform: translateY(-15%);
+}
+
+.is-prepared.is-visible .reveal-fade {
+  transform: none;
+  opacity: 1;
+  transition: 0.8s ease;
+  transition-property: opacity, transform;
+}

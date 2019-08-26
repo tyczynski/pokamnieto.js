@@ -13,10 +13,10 @@
 		"vanilla-js",
 		"vanillajs"
 	],
-	"main": "dist/js/pokamnieto.js",
-	"browser": "dist/js/pokamnieto.js",
+	"main": "lib/js/pokamnieto.js",
+	"browser": "lib/js/pokamnieto.js",
 	"files": [
-		"dist",
+		"lib",
 		"src"
 	],
 	"scripts": {
