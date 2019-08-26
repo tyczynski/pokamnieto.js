@@ -1,11 +1,8 @@
 # dependencies
 node_modules/
 
-# dist
-dist/
+# lib
+lib/
 
-# docs
-docs/
-
-# dev
-gulp-tasks/
+# gulp
+gulpfile.js
