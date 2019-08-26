@@ -1,7 +1,7 @@
 /**
  * Function that returns information about the position of an element
  *
- * @param {Element} element
+ * @param {HTMLElement} element
  * @return {Array}
  */
 export default function elementPositionInfo(element) {

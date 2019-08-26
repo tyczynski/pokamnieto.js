@@ -5,9 +5,11 @@ const defaultConfig = {
 	rootMargin: '0px',
 	threshold: 0,
 
+	// CSS class names
 	elementVisibleClassName: 'is-visible',
 	elementPreparedClassName: 'is-prepared',
 
+	// rest
 	unmountOnRevealAll: false,
 };
 

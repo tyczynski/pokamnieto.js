@@ -10,11 +10,11 @@ export default class Pokamnieto {
 	/**
 	 * Class for revealing elements when they appear in the view while scrolling the page based on the IntersectionObserver API.
 	 *
-	 * @param {String} elements
+	 * @param {string} selector
 	 * @param {Object} config
 	 */
-	constructor(elements = '.js-pokamnieto', config = {}) {
-		this.elements = Array.from(document.querySelectorAll(elements));
+	constructor(selector = '.js-pokamnieto', config = {}) {
+		this.elements = [...document.querySelectorAll(selector)];
 
 		this.config = Object.assign({}, defaultConfig, config);
 		this.state = {
@@ -29,6 +29,8 @@ export default class Pokamnieto {
 	/**
 	 * Function that prepare elements to reveal animation.
 	 * It fired only once after the first page rewind.
+	 *
+	 * @return {void}
 	 */
 	prepareElements() {
 		const { elementPreparedClassName } = this.config;
@@ -60,6 +62,8 @@ export default class Pokamnieto {
 
 	/**
 	 * Function that initializes the IntersectionObserver instance
+	 *
+	 * @return {void}
 	 */
 	initObserver() {
 		this.observer = new IntersectionObserver(this.callback.bind(this), {
@@ -77,6 +81,7 @@ export default class Pokamnieto {
 	 * Callback for the IntersectionObserver instance
 	 *
 	 * @param {Array} entries
+	 * @return {void}
 	 */
 	callback(entries) {
 		const { elementVisibleClassName } = this.config;
@@ -122,6 +127,7 @@ export default class Pokamnieto {
 	 * Public method that adds another element to the IntersectionObserver instance
 	 *
 	 * @param {Element} element
+	 * @return {void}
 	 */
 	observe(element) {
 		this.observer.observe(element);
