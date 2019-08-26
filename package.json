@@ -1,6 +1,6 @@
 {
 	"name": "pokamnieto",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "A lightweight for revealing elements when they appear in the view while scrolling the page based on the IntersectionObserver API.",
 	"keywords": [
 		"animation",
