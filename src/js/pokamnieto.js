@@ -18,11 +18,9 @@ export default class Pokamnieto {
 
 		this.config = Object.assign({}, defaultConfig, config);
 
-		if (this.config.initImmediately) {
-			this.initObserver();
-		} else {
-			window.addEventListener('scroll', this.prepareElements.bind(this));
-		}
+		this.prepareElements = this.prepareElements.bind(this);
+
+		window.addEventListener('scroll', this.prepareElements);
 	}
 
 	/**
@@ -31,6 +29,8 @@ export default class Pokamnieto {
 	 */
 	prepareElements() {
 		const { elementPreparedClassName } = this.config;
+
+		window.removeEventListener('scroll', this.prepareElements);
 
 		/**
 		 * Filter items in the current viewport
@@ -49,8 +49,6 @@ export default class Pokamnieto {
 
 			return !isInViewport;
 		});
-
-		window.removeEventListener('scroll', this.prepareElements.bind(this));
 
 		this.initObserver();
 	}
