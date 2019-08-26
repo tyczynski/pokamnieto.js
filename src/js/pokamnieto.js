@@ -17,6 +17,9 @@ export default class Pokamnieto {
 		this.elements = Array.from(document.querySelectorAll(elements));
 
 		this.config = Object.assign({}, defaultConfig, config);
+		this.state = {
+			observedElements: 0,
+		};
 
 		this.prepareElements = this.prepareElements.bind(this);
 
@@ -49,6 +52,8 @@ export default class Pokamnieto {
 
 			return !isInViewport;
 		});
+
+		this.state.observedElements = this.elements.length;
 
 		this.initObserver();
 	}
@@ -83,8 +88,34 @@ export default class Pokamnieto {
 				target.classList.add(elementVisibleClassName);
 
 				this.observer.unobserve(target);
+				this.state.observedElements -= 1;
+
+				this.unmountIf();
 			}
 		});
+	}
+
+	/**
+	 * A method that stops the observer if there are no observed elements
+	 *
+	 * @return {void}
+	 */
+	unmountIf() {
+		const { observedElements } = this.state;
+		const { unmountOnRevealAll } = this.config;
+
+		if (observedElements === 0 && unmountOnRevealAll) {
+			this.unmount();
+		}
+	}
+
+	/**
+	 * Public method that stops the observer
+	 *
+	 * @return {void}
+	 */
+	unmount() {
+		this.observer.disconnect();
 	}
 
 	/**
@@ -94,5 +125,6 @@ export default class Pokamnieto {
 	 */
 	observe(element) {
 		this.observer.observe(element);
+		this.state.observedElements += 1;
 	}
 }
