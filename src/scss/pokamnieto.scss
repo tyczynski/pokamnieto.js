@@ -1,37 +1,50 @@
-.reveal-fade {
-	transition: none;
+/* ------------------------------
+    REVEAL FADE IN
+------------------------------ */
+.reveal-fade-in {
+	&.is-prepared {
+		transition: none;
+		opacity: 0;
+	}
+
+	&.is-visible {
+		transition: opacity 0.5s ease;
+		opacity: 1;
+	}
 }
 
+/* ------------------------------
+    REVEAL FADE UP / FADE DOWN
+------------------------------ */
 .is-prepared {
 	.reveal-fade {
+		transition: none;
 		opacity: 0;
+	}
+
+	&.down {
+		.reveal-fade {
+			transform: translateY(15%);
+		}
 	}
 
 	&.up {
 		.reveal-fade {
-			transform: translateY(-30%);
+			transform: translateY(-15%);
 		}
 	}
 
-	&.down {
+	&.is-visible {
 		.reveal-fade {
-			transform: translateY(30%);
+			transform: none;
+			opacity: 1;
+
+			@include media-breakpoint-only(xs) {
+				transition: 0.6s ease !important;
+			}
+
+			transition: 0.8s ease;
+			transition-property: opacity, transform;
 		}
-	}
-}
-
-.is-visible {
-	&.up,
-	&.down {
-		.reveal-fade {
-			transform: translateY(0);
-		}
-	}
-
-	.reveal-fade {
-		transition: 0.8s ease;
-		transition-property: opacity, transform;
-
-		opacity: 1;
 	}
 }
