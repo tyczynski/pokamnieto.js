@@ -39,10 +39,6 @@
 			transform: none;
 			opacity: 1;
 
-			@include media-breakpoint-only(xs) {
-				transition: 0.6s ease !important;
-			}
-
 			transition: 0.8s ease;
 			transition-property: opacity, transform;
 		}
